@@ -25,7 +25,6 @@ poetry.lock
 *.png
 *.jpg
 *.jpeg
-*.svg
 
 # Temporary editor files
 *.swp
