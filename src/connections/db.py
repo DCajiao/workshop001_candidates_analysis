@@ -27,24 +27,36 @@ class DB:
                 password=self.password
             )
             self.cursor = self.conn.cursor()
-            logging.info("- Connected to database")
+            logging.info("✔ Connected to database")
         except Exception as e:
-            logging.error(f"Error connecting to database: {e}")
+            logging.error(f"✖ Error connecting to database: {e}")
             raise
 
     def close(self):
         if self.cursor:
             self.cursor.close()
-            logging.info("- Cursor closed")
+            logging.info("✔ Cursor closed")
         if self.conn:
-            logging.info("- Connection closed")
+            logging.info("✔ Connection closed")
             self.conn.close()
 
-    def execute(self, query):
+    def execute(self, query_path, fetch_results=True):
         try:
+            with open(query_path, 'r') as file:
+                query = file.read()
+            self.connect()
             self.cursor.execute(query)
-            logging.info("- Query executed")
-            return self.cursor.fetchall()
+            self.conn.commit() 
+            logging.info("✔ Query executed")
+
+            # Only fetch results if requested and if there is a description
+            if fetch_results and self.cursor.description:
+                return self.cursor.fetchall()
+
+            return None  # Return None if there are no results to fetch or if fetch_results is False
         except Exception as e:
-            logging.error(f"Error executing query: {e}")
+            logging.error(f"✖ Error executing query: {e}")
+            self.conn.rollback()  # Rollback in case of error
             raise
+        finally:
+            self.close()
