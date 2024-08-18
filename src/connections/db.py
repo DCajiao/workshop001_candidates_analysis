@@ -67,10 +67,9 @@ class DB:
                 query = file.read()
             self.connect()
             self.cursor.execute(query)
-            rows = self.cursor.fetchall()  # Obtener los datos de la consulta
-            # Obtener los nombres de las columnas
-            colnames = [desc[0] for desc in self.cursor.description]
-            df = pd.DataFrame(rows, columns=colnames)  # Convertir en DataFrame
+            rows = self.cursor.fetchall()  # Get query data
+            colnames = [desc[0] for desc in self.cursor.description] # Get column names
+            df = pd.DataFrame(rows, columns=colnames) # Convert to df
             logging.info("✔ Data loaded into DataFrame")
             return df
         except Exception as e:
