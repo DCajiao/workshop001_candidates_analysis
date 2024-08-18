@@ -1,5 +1,6 @@
 import psycopg2
 import logging
+import pandas as pd
 
 from utils.credentials_management import get_database_credentials
 
@@ -37,8 +38,8 @@ class DB:
             self.cursor.close()
             logging.info("✔ Cursor closed")
         if self.conn:
-            logging.info("✔ Connection closed")
             self.conn.close()
+            logging.info("✔ Connection closed")
 
     def execute(self, query_path, fetch_results=True):
         try:
@@ -46,17 +47,34 @@ class DB:
                 query = file.read()
             self.connect()
             self.cursor.execute(query)
-            self.conn.commit() 
+            self.conn.commit()
             logging.info("✔ Query executed")
 
-            # Only fetch results if requested and if there is a description
-            if fetch_results and self.cursor.description:
+            # Fetch results if requested
+            if fetch_results:
                 return self.cursor.fetchall()
-
-            return None  # Return None if there are no results to fetch or if fetch_results is False
+            return None
         except Exception as e:
             logging.error(f"✖ Error executing query: {e}")
-            self.conn.rollback()  # Rollback in case of error
+            self.conn.rollback()
+            raise
+        finally:
+            self.close()
+
+    def fetch_as_dataframe(self, query_path):
+        try:
+            with open(query_path, 'r') as file:
+                query = file.read()
+            self.connect()
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()  # Obtener los datos de la consulta
+            # Obtener los nombres de las columnas
+            colnames = [desc[0] for desc in self.cursor.description]
+            df = pd.DataFrame(rows, columns=colnames)  # Convertir en DataFrame
+            logging.info("✔ Data loaded into DataFrame")
+            return df
+        except Exception as e:
+            logging.error(f"✖ Error loading data into DataFrame: {e}")
             raise
         finally:
             self.close()
