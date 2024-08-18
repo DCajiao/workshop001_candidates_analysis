@@ -58,7 +58,7 @@ class SQLSchemaGenerator:
         else:
             return "TEXT"
 
-    def generate_schema(self, df, query_file_path='sql/schema.sql'):
+    def generate_schema(self, df, query_file_path='sql/schema.sql', return_query=False):
         """
         Generates a SQL schema for a given pandas DataFrame.
 
@@ -77,9 +77,10 @@ class SQLSchemaGenerator:
         schema = f"CREATE TABLE IF NOT EXISTS {self.table_name} (\n" + ",\n".join(columns) + "\n);"
 
         self.write_query_file(schema, query_file_path)
-        return schema
+        if return_query:
+            return schema
 
-    def generate_seed_data(self, df, query_file_path='sql/seed_data.sql'):
+    def generate_seed_data(self, df, query_file_path='sql/seed_data.sql', return_query=False):
         """
         Generates SQL insert statements to seed data into a SQL table.
 
@@ -106,4 +107,5 @@ class SQLSchemaGenerator:
                 f"INSERT INTO {self.table_name} VALUES (" + ", ".join(values) + ");")
         seed_data = "\n".join(insert_statements)
         self.write_query_file(seed_data, query_file_path)
-        return seed_data
+        if return_query:
+            return seed_data
