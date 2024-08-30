@@ -1,4 +1,5 @@
 # 🚀 Deploying a Free PostgreSQL Database on Render.com
+*by DCajiao*
 
 This guide walks you through the steps to deploy a **free** PostgreSQL database on Render.com, perfect for small projects or testing environments. Below are the steps with corresponding screenshots to help you through the process.
 
