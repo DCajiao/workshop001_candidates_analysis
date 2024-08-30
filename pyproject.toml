@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "workshop001-candidates-analysis"
+version = "0.1.0"
+description = "This ETL (Extract, Transform, Load) project focuses on processing and analyzing a dataset of hiring candidates. The main objective is to convert raw data into valuable and actionable information for business decision-making."
+authors = ["DCajiao"]
+license = "MIT license"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+flask = "^3.0.3"
+ipykernel = "^6.29.5"
+matplotlib = "^3.9.2"
+numpy = "^2.1.0"
+pandas = "^2.2.2"
+psycopg2 = "^2.9.9"
+requests = "^2.32.3"
+scipy = "^1.14.1"
+seaborn = "^0.13.2"
+sqlalchemy = "^2.0.32"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
