@@ -1,4 +1,8 @@
-# 🚀 Deploying a Free PostgreSQL Database on Render.com
+<center>
+
+# 🚀 Deploying a Free PostgreSQL Database on [Render.com](https://render.com)
+</center>
+
 *by DCajiao*
 
 This guide walks you through the steps to deploy a **free** PostgreSQL database on Render.com, perfect for small projects or testing environments. Below are the steps with corresponding screenshots to help you through the process.
@@ -14,7 +18,7 @@ Fill in the following fields:
 - **User**: (Optional) Database username.
 - **Region**: Select the region where you want to deploy your database.
 
-![Initial Setup](./path/to/your/screenshot1.png)
+![Initial Setup](./img/screenshot1.png)
 
 ### Select Instance Type
 
@@ -25,7 +29,7 @@ Render offers various instance types. For this guide, select the **Free** option
 
 ⚠️ Note: The free database will be deleted after 30 days unless upgraded, and it will be suspended after 72 hours of inactivity.
 
-![Select Instance Type](./path/to/your/screenshot2.png)
+![Select Instance Type](./img/screenshot2.png)
 
 ### Database Connection Details
 
@@ -38,7 +42,7 @@ Once the instance is created, Render provides you with connection details:
 
 💾 Be sure to save this information securely!
 
-![Connection Details](./path/to/your/screenshot3.png)
+![Connection Details](./img/screenshot3.png)
 
 ## 2. Connect to Your Database
 
