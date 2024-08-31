@@ -16,6 +16,7 @@ This project is an **ETL workshop** that I developed to walk participants throug
 - **SQL**: For database management and querying.
 - **Render**: A cloud service used to deploy databases.
 - **Pandas, NumPy, Matplotlib**: Libraries for data manipulation and visualization.
+- **Looker**: Final dashboard viewer.
 
 ## 📦 What’s in this repo?
 
@@ -55,6 +56,8 @@ This repository contains everything needed to replicate and understand the entir
 │       └── seed_data_clean.sql     # Clean seed data migration
 │
 ├── /reports/                       # Reports generated during the project
+│   │   /project_results            # Folder with the final pdf report
+│   │   └── ETL_Workshop_001_-_Final_Report_Candidates_Analysis  # Final report pdf
 │   └── /dashboard/                 # Dashboards and visual reports
 │       └── ETL-Workshop01-Candidates.pdf # Final report on candidates analysis
 │
@@ -121,6 +124,12 @@ Once your environment is set up, you can run the ETL scripts by following the st
 ## 🛣️ Data Pipeline Diagram
 
 ![Data Pipeline Diagram](./docs/data_pipeline/pipeline.svg)
+
+## 📊 Final Dashboard & Report
+
+* Online Version: [Looker dashboard](https://lookerstudio.google.com/reporting/67a21901-1ed4-4228-a0b9-88bc08a653e1)
+* Offline Version: [PDF](https://github.com/DCajiao/workshop001_candidates_analysis/blob/develop/reports/dashboard/ETL-Workshop01-Candidates.pdf)
+* Report of project: [Documentation](https://github.com/DCajiao/workshop001_candidates_analysis/blob/develop/reports/project_results/ETL_Workshop_001_-_Final_Report_Candidates_Analysis.pdf)
 
 ## 🎯 Additional information on this project
 
