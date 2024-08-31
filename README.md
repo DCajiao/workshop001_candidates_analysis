@@ -10,13 +10,13 @@ This project is an **ETL workshop** that I developed to walk participants throug
 
 ### 🔨 Technologies Used
 
-- **Python**: The main programming language used for data extraction, transformation, and loading.
-- **Poetry**: A tool for dependency management and packaging in Python projects.
-- **Jupyter Notebooks**: Used for data exploration, cleaning, and analysis.
-- **SQL**: For database management and querying.
-- **Render**: A cloud service used to deploy databases.
-- **Pandas, NumPy, Matplotlib**: Libraries for data manipulation and visualization.
-- **Looker**: Final dashboard viewer.
+- 🐍**Python**: The main programming language used for data extraction, transformation, and loading.
+- 📦**Poetry**: A tool for dependency management and packaging in Python projects.
+- 📒**Jupyter Notebooks**: Used for data exploration, cleaning, and analysis.
+- 🗄️**SQL**: For database management and querying.
+- ☁️**Render**: A cloud service used to deploy databases.
+- 📊**Pandas, NumPy, Matplotlib**: Libraries for data manipulation and visualization.
+- 📈**Looker**: Final dashboard viewer.
 
 ## 📦 What’s in this repo?
 
