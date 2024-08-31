@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS candidates_cleaned (
 "technology" TEXT,
 "technology_topic" TEXT,
 "code_challenge_score" INTEGER,
-"technical_interview_score" INTEGER
+"technical_interview_score" INTEGER,
+"hired" INTEGER
 );

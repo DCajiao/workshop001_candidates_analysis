@@ -8,7 +8,38 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 
 class DB:
+    """
+    A class to manage PostgreSQL database connections, execute queries, and 
+    retrieve data as Pandas DataFrames.
+
+    Attributes:
+        dbname (str): The name of the database.
+        user (str): The username to connect to the database.
+        password (str): The password for the database user.
+        host (str): The host address of the database server.
+        port (str): The port number on which the database server is running.
+        conn (psycopg2.extensions.connection or None): The database connection object.
+        cursor (psycopg2.extensions.cursor or None): The cursor object for executing queries.
+
+    Methods:
+        connect():
+            Establishes a connection to the database.
+
+        close():
+            Closes the database connection and cursor.
+
+        execute(query_path, fetch_results=True):
+            Executes a SQL query from a file and optionally fetches the results.
+
+        fetch_as_dataframe(query_path):
+            Executes a SQL query from a file and returns the results as a Pandas DataFrame.
+    """
+
     def __init__(self):
+        """
+        Initializes the DB class with database credentials and sets up connection
+        and cursor attributes.
+        """
         credentials = get_database_credentials()
         self.dbname = credentials['dbname']
         self.user = credentials['user']
@@ -19,6 +50,12 @@ class DB:
         self.cursor = None
 
     def connect(self):
+        """
+        Establishes a connection to the PostgreSQL database using the provided credentials.
+
+        Raises:
+            Exception: If an error occurs while attempting to connect to the database.
+        """
         try:
             self.conn = psycopg2.connect(
                 host=self.host,
@@ -34,6 +71,9 @@ class DB:
             raise
 
     def close(self):
+        """
+        Closes the database cursor and connection, if they are open.
+        """
         if self.cursor:
             self.cursor.close()
             logging.info("✔ Cursor closed")
@@ -42,6 +82,21 @@ class DB:
             logging.info("✔ Connection closed")
 
     def execute(self, query_path, fetch_results=True):
+        """
+        Executes a SQL query from a file and commits the transaction.
+
+        Args:
+            query_path (str): The file path to the SQL query.
+            fetch_results (bool, optional): Whether to fetch and return the query results.
+                                            Defaults to True.
+
+        Returns:
+            list or None: A list of tuples representing the query results if `fetch_results`
+                        is True, otherwise None.
+
+        Raises:
+            Exception: If an error occurs during query execution or result fetching.
+        """
         try:
             with open(query_path, 'r') as file:
                 query = file.read()
@@ -50,7 +105,6 @@ class DB:
             self.conn.commit()
             logging.info("✔ Query executed")
 
-            # Fetch results if requested
             if fetch_results:
                 return self.cursor.fetchall()
             return None
@@ -62,14 +116,26 @@ class DB:
             self.close()
 
     def fetch_as_dataframe(self, query_path):
+        """
+        Executes a SQL query from a file and returns the results as a Pandas DataFrame.
+
+        Args:
+            query_path (str): The file path to the SQL query.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the query results.
+
+        Raises:
+            Exception: If an error occurs during query execution or DataFrame creation.
+        """
         try:
             with open(query_path, 'r') as file:
                 query = file.read()
             self.connect()
             self.cursor.execute(query)
-            rows = self.cursor.fetchall()  # Get query data
-            colnames = [desc[0] for desc in self.cursor.description] # Get column names
-            df = pd.DataFrame(rows, columns=colnames) # Convert to df
+            rows = self.cursor.fetchall()
+            colnames = [desc[0] for desc in self.cursor.description]
+            df = pd.DataFrame(rows, columns=colnames)
             logging.info("✔ Data loaded into DataFrame")
             return df
         except Exception as e:

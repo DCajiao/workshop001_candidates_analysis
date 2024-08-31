@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 class SQLSchemaGenerator:
     def __init__(self, table_name='my_table'):
         """
-        Initializes the SQLSchemaGenerator with a table name.
+        Initialize the SQLSchemaGenerator with a table name.
 
         Args:
             table_name (str, optional): The name of the SQL table. Defaults to 'my_table'.
@@ -18,35 +18,37 @@ class SQLSchemaGenerator:
 
     def write_query_file(self, query, query_file_path='query.sql'):
         """
-        Writes a SQL query to a file, ensuring that the directories in the path exist.
+        Write a SQL query to a specified file, ensuring the directory structure exists.
 
         Args:
             query (str): The SQL query to be written to the file.
-            query_file (str, optional): Path to the file where the query should be written. Defaults to 'query.sql'.
+            query_file_path (str, optional): Path to the file where the query should be written. 
+                                            Defaults to 'query.sql'.
+
+        Raises:
+            IOError: If the file cannot be written.
         """
-        # Ensure the directory for the file exists
         dir_name = os.path.dirname(query_file_path)
         if dir_name:
             os.makedirs(dir_name, exist_ok=True)
-        
-        # Write the query to the specified file
+
         with open(query_file_path, 'w') as f:
             f.write(query)
-        
+
         logging.info(f"Query written to {query_file_path}")
 
     def infer_sql_type(self, dtype):
         """
-        Infers the corresponding SQL data type for a given pandas dtype.
+        Infer the corresponding SQL data type for a given pandas dtype.
 
         Args:
             dtype (numpy.dtype): The data type of the pandas DataFrame column.
 
         Returns:
-            str: The inferred SQL data type as a string. Possible values include "INTEGER", 
-            "FLOAT", "BOOLEAN", "TIMESTAMP", or "TEXT".
+            str: The inferred SQL data type as a string. Possible values include:
+                "INTEGER", "FLOAT", "BOOLEAN", "TIMESTAMP", or "TEXT".
         """
-        logging.info(f"Infering SQL type for {dtype}")
+        logging.info(f"Inferring SQL type for {dtype}")
         if np.issubdtype(dtype, np.integer):
             return "INTEGER"
         elif np.issubdtype(dtype, np.floating):
@@ -60,14 +62,18 @@ class SQLSchemaGenerator:
 
     def generate_schema(self, df, query_file_path='sql/schema.sql', return_query=False):
         """
-        Generates a SQL schema for a given pandas DataFrame.
+        Generate a SQL schema for a given pandas DataFrame.
 
         Args:
             df (pandas.DataFrame): The DataFrame for which the schema is to be generated.
+            query_file_path (str, optional): Path to the file where the schema SQL should be written.
+                                            Defaults to 'sql/schema.sql'.
+            return_query (bool, optional): Whether to return the generated SQL schema string.
+                                        Defaults to False.
 
         Returns:
-            str: A string containing the SQL statement to create the table with the inferred 
-            column types.
+            str: The SQL statement to create the table with inferred column types, if 
+                return_query is True. Otherwise, returns None.
         """
         logging.info(f"Generating schema for {self.table_name}")
         columns = []
@@ -82,13 +88,18 @@ class SQLSchemaGenerator:
 
     def generate_seed_data(self, df, query_file_path='sql/seed_data.sql', return_query=False):
         """
-        Generates SQL insert statements to seed data into a SQL table.
+        Generate SQL insert statements to seed data into a SQL table.
 
         Args:
             df (pandas.DataFrame): The DataFrame containing the data to be inserted.
+            query_file_path (str, optional): Path to the file where the insert SQL statements should be written.
+                                            Defaults to 'sql/seed_data.sql'.
+            return_query (bool, optional): Whether to return the generated SQL insert statements as a string.
+                                            Defaults to False.
 
         Returns:
-            str: A string containing multiple SQL insert statements to seed the data into the table.
+            str: The SQL insert statements to seed the data into the table, if return_query is True. 
+                Otherwise, returns None.
         """
         logging.info(f"Generating seed data for {self.table_name}")
         insert_statements = []
